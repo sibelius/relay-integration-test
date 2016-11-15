@@ -1,45 +1,39 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
+import Relay from 'react-relay';
+import ViewerQuery from './ViewerQuery';
+import { createRenderer } from './RelayUtils';
 
-export default class RelayApp extends Component {
+class RelayApp extends Component {
   render() {
+    console.log('RelayApp: ', this.props);
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+      <View>
+        <Text>name: {this.props.viewer.users.edges[0].node.name}</Text>
+        <Text>length: {this.props.viewer.users.edges.length}</Text>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+// Create a Relay.Renderer container
+export default createRenderer(RelayApp, {
+  queries: ViewerQuery,
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on Viewer {
+        users(first: 2) {
+          edges {
+            node {
+              name
+            }
+          }
+        }
+      }
+    `,
   },
 });
