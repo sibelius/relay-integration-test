@@ -49,7 +49,10 @@ export default new GraphQLObjectType({
           type: GraphQLString,
         },
       },
-      resolve: (obj, args, { user }) => UserLoader.loadUsers(user, args),
+      resolve: (obj, args, { user }) => {
+        console.log('getUsers: ', user, args);
+        return UserLoader.loadUsers(user, args)
+      },
     },
   }),
   interfaces: () => [NodeInterface],

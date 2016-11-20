@@ -46,6 +46,8 @@ export default class User {
 
     if (!data) return null;
 
+    console.log('data: ', data);
+
     return User.viewerCanSee(viewer, data) ? new User(data, viewer) : null;
   }
 

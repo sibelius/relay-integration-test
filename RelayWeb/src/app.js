@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
 import Relay from 'react-relay';
 import ViewerQuery from './ViewerQuery';
 import { createRenderer } from './RelayUtils';
@@ -15,12 +10,21 @@ RelayStore.reset(
 
 class RelayApp extends Component {
   render() {
-    console.log('RelayApp: ', this.props);
+    console.log('RelayWeb: ', this.props);
+
+    if (!this.props.viewer.users) {
+      return (
+        <div>
+          <span>No users</span>
+        </div>
+      );
+    }
+
     return (
-      <View>
-        <Text>name: {this.props.viewer.users.edges[0].node.name}</Text>
-        <Text>length: {this.props.viewer.users.edges.length}</Text>
-      </View>
+      <div>
+        <span>name: {this.props.viewer.users.edges[0].node.name}</span>
+        <span>length: {this.props.viewer.users.edges.length}</span>
+      </div>
     );
   }
 }

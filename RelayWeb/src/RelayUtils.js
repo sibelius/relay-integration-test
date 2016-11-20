@@ -3,13 +3,6 @@
 
 import React from 'react';
 import type { Element as ReactElement } from 'react';
-import {
-  ActivityIndicator,
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
 import Relay from 'react-relay';
 import RelayStore from './RelayStore';
 
@@ -31,7 +24,7 @@ type Config = {
   renderFailure?: (error: Error, retry: ?() => void) => ?ReactElement<any>;
 };
 
-const styles = StyleSheet.create({
+const styles = {
   content: {
     flex: 1,
     alignItems: 'stretch',
@@ -43,24 +36,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'lightgray',
   },
-});
+};
 
 const LoadingView = () => (
-  <View style={styles.content}>
-    <View style={styles.loading}>
-      <ActivityIndicator />
-    </View>
-  </View>
+  <div style={styles.content}>
+    <div style={styles.loading}>
+      <span>Loading</span>
+    </div>
+  </div>
 );
 
 const FailureView = ({ error, retry }) => (
-  <View style={{ paddingTop: 46, alignItems: 'center' }}>
-    <Text>Error</Text>
-    <Text>{error.message}</Text>
-    <TouchableOpacity onPress={retry}>
-      <Text>Try again</Text>
-    </TouchableOpacity>
-  </View>
+  <div style={{ paddingTop: 46, alignItems: 'center' }}>
+    <span>Error</span>
+    <span>{error.message}</span>
+    <button onClick={retry}>
+      <span>Try again</span>
+    </button>
+  </div>
 );
 
 export function createRenderer(
